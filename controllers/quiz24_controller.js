@@ -1,18 +1,23 @@
+var models=require('../models/models.js');
+
 //get /quizes/question
 exports.question=function(req,res){
-  res.render("quizes/question",
-    {pregunta: "capital de Carabobo"});
-  
+  models.Quiz.findAll().success(function(quiz){
+   res.render("quizes/question",
+    {pregunta: "quiz[0].pregunta"});
+  );//models quiz
 };//f question
 
 //get /quizes/answer
 exports.answer=function(req,res){
-  if(req.query.respuesta=="Valencia"){ //== o === , igual toma las mayusculas
+ models.Quiz.findAll().success(function(quiz){
+  if(req.query.respuesta==quiz[0].respuesta){ //== o === , igual toma las mayusculas
     res.render("quizes/answer",
     {respuesta:"correctisimo"});
   }//if
   else{
    res.render("quizes/answer",
     {respuesta:"mal mal"});
-    }//else
+  }//else
+ };//models quiz
 };//f answer
